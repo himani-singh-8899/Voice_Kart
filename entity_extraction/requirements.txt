@@ -1,0 +1,4 @@
+1) Create a virtual env first
+python3 -m spacy download en_core_web_lg
+pip3 install spacy
+pip3 insrall flask
