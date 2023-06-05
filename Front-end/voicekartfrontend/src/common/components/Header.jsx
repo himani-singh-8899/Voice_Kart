@@ -13,117 +13,205 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { makeStyles } from "@mui/styles";
-import MachintLogo from '../../assests/images/Machint.svg'
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { useTheme } from "@mui/material/styles";
 
 const useStyles = makeStyles((theme) => ({
   menuStyle: {
-    color: "#444444",
-    cursor: "pointer",
-    padding: "10px",
-    transition: "transform .2s",
+    color: "#000",
+    fontSize: "16px",
+    fontWeight: "bold",
+    padding: "12px 16px",
+    margin: "0 8px",
+    textDecoration: "none",
+    transition: "color 0.3s",
     "&:hover": {
-      transform: "scale(0.8)",
-      color: "#AB26A3",
-    },
-    "&:active": {
-      color: "red",
-      boxShadow: "inset 1px 0px 3px 4px #948bb94d",
-      transform: "scale(0.6)",
-      borderRadius: "7px",
+      color: "#0066c0",
     },
   },
+  logoStyle: {
+    marginRight: "16px",
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
+  },
+  avatarStyle: {
+    backgroundColor: "#fff",
+    color: "#0066c0",
+  },
 }));
+
 const settings = ["Profile", "Logout"];
-// const pages = [
-//   { name: "Home", path: "/homepage" },
-//   { name: "About Us", path: "/" },
-// ];
 
 export default function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const classes = useStyles();
-  console.log(props, "propsssss");
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const theme = useTheme();
+
+  const handleOpenNavMenu = () => {
+    setIsDrawerOpen(true);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
   const handleCloseUserMenu = (setting) => {
-    if (setting == "Logout") {
+    if (setting === "Logout") {
+      // Handle logout logic
     }
     setAnchorElUser(null);
   };
+
   const handleCloseNavMenu = (path) => {
-    console.log(path);
     props.Redirectpath(path);
+    setIsDrawerOpen(false);
   };
 
   return (
-    <AppBar
-      position="fixed"
-      style={{ background: "#fff", padding: "0px 30px" }}
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }}
-    >
-      <Toolbar disableGutters>
-        <img src={MachintLogo} width="120px" />
+    <React.Fragment>
+      <AppBar position="fixed" color="primary">
+        <Container maxWidth="lg">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={handleOpenNavMenu}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <a href="/" className={classes.logoStyle}>
+                <img
+                  src="/path/to/walmart-logo.png"
+                  // alt="Walmart Logo"
+                  height={24}
+                  width={24}
+                  style={{ marginRight: theme.spacing(1) }}
+                />
+                <div style={{color:"white",fontSize:'30px',fontWe:'600'}}>Walmart</div>
+                
+              </a>
+            </Typography>
+            <Box>
+              <Button
+                className={classes.menuStyle}
+                onClick={() => handleCloseNavMenu("/homepage")}
+              >
+                Home
+              </Button>
+              <Button
+                className={classes.menuStyle}
+                onClick={() => handleCloseNavMenu("/about")}
+              >
+                About Us
+              </Button>
+            </Box>
+            <Box sx={{ ml: "auto" }}>
+              <Tooltip title="Open settings">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                  aria-label="user-menu"
+                >
+                  <Avatar
+                    alt="User Avatar"
+                    src="/static/images/avatar/2.jpg"
+                    className={classes.avatarStyle}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleCloseUserMenu(setting)}
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Drawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      >
         <Box
           sx={{
-            flexGrow: 2,
+            width: 250,
             display: "flex",
-            justifyContent: "flex-end",
-            fontSize: "17px",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            padding: theme.spacing(2),
           }}
+          role="presentation"
+          onClick={() => setIsDrawerOpen(false)}
         >
-          {/* {pages.map((page, index) => (
-            <div
-              key={index}
-              onClick={() => handleCloseNavMenu(page.path)}
-              className={classes.menuStyle}
-            >
-              {page.name}
-            </div>
-          ))} */}
-        </Box>
-        &nbsp;
-        <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/2.jpg"
-                style={{ color: "#001045", background: "#f1fcff" }}
-              />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: theme.spacing(2),
             }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
           >
+            <img
+              src="/path/to/walmart-logo.png"
+              // alt="Walmart Logo"
+              height={24}
+              width={24}
+              style={{ marginRight: theme.spacing(1) }}
+            />
+            <Typography variant="h6">Walmart</Typography>
+          </Box>
+          <List>
+            <ListItem button onClick={() => handleCloseNavMenu("/homepage")}>
+              <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button onClick={() => handleCloseNavMenu("/about")}>
+              <ListItemText primary="About Us" />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
             {settings.map((setting) => (
-              <MenuItem
+              <ListItem
+                button
                 key={setting}
                 onClick={() => handleCloseUserMenu(setting)}
               >
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
+                <ListItemText primary={setting} />
+              </ListItem>
             ))}
-          </Menu>
+          </List>
         </Box>
-      </Toolbar>
-    </AppBar>
+      </Drawer>
+    </React.Fragment>
   );
 }
