@@ -1,5 +1,5 @@
 import React from "react";
- import IsolationMode1 from "../../assests/images/Isolation_Mode1.svg";
+//  import IsolationMode1 from "../../assests/images/Isolation_Mode1.svg";
 
  
 export default function BackgroundCard(props) {
@@ -10,7 +10,7 @@ return (
           ? props.style
           : {
               // backgroundColor: props.backgroundColor?props.backgroundColor:'white',
-              background:`#fff url(${IsolationMode1}) no-repeat center bottom`,
+              // background:`#fff url(${IsolationMode1}) no-repeat center bottom`,
               marginBottom: props.marginBottom,
               padding: "15px 15px 40px",
               marginTop: '3px',
