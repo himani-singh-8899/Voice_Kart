@@ -20,6 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useTheme } from "@mui/material/styles";
+import walmart from "../../assests/walmart.jpg"
 
 const useStyles = makeStyles((theme) => ({
   menuStyle: {
@@ -33,12 +34,19 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: "#0066c0",
     },
+    // Align menu items at two ends
+    marginLeft: "auto",
   },
   logoStyle: {
     marginRight: "16px",
     display: "flex",
     alignItems: "center",
     textDecoration: "none",
+    // Update header styles
+    fontSize: "24px",
+    fontWeight: "bold",
+    color: "#fff",
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)",
   },
   avatarStyle: {
     backgroundColor: "#fff",
@@ -77,9 +85,9 @@ export default function ResponsiveAppBar(props) {
 
   return (
     <React.Fragment>
-      <AppBar position="fixed" color="primary">
-        <Container maxWidth="lg">
-          <Toolbar>
+      <AppBar position="fixed" color="primary" sx={{ height: 72 }}>
+        <Container maxWidth="none">
+          <Toolbar sx={{ height: "100%" }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -89,20 +97,15 @@ export default function ResponsiveAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <a href="/" className={classes.logoStyle}>
+            {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> */}
+             
                 <img
-                  src="/path/to/walmart-logo.png"
                   // alt="Walmart Logo"
-                  height={24}
-                  width={24}
-                  style={{ marginRight: theme.spacing(1) }}
+                  src={walmart}
+                  height='55%'
                 />
-                <div style={{color:"white",fontSize:'30px',fontWe:'600'}}>Walmart</div>
-                
-              </a>
-            </Typography>
-            <Box>
+            {/* </Typography> */}
+            {/* <Box>
               <Button
                 className={classes.menuStyle}
                 onClick={() => handleCloseNavMenu("/homepage")}
@@ -115,7 +118,7 @@ export default function ResponsiveAppBar(props) {
               >
                 About Us
               </Button>
-            </Box>
+            </Box> */}
             <Box sx={{ ml: "auto" }}>
               <Tooltip title="Open settings">
                 <IconButton
@@ -182,22 +185,18 @@ export default function ResponsiveAppBar(props) {
             }}
           >
             <img
-              src="/path/to/walmart-logo.png"
-              // alt="Walmart Logo"
-              height={24}
-              width={24}
-              style={{ marginRight: theme.spacing(1) }}
+              src={walmart}
+              height='55%'
             />
-            <Typography variant="h6">Walmart</Typography>
           </Box>
-          <List>
+          {/* <List>
             <ListItem button onClick={() => handleCloseNavMenu("/homepage")}>
               <ListItemText primary="Home" />
             </ListItem>
             <ListItem button onClick={() => handleCloseNavMenu("/about")}>
               <ListItemText primary="About Us" />
             </ListItem>
-          </List>
+          </List> */}
           <Divider />
           <List>
             {settings.map((setting) => (
