@@ -56,7 +56,7 @@ export default function ActionButton(props) {
         textTransform: "capitalize",
         backgroundColor: props.backgroundColor
           ? props.backgroundColor
-          : "#219070",
+          : "#2076d0",
         color: props.color
           ? props.color
           : "white",
